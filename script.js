@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             try {
                                 const data = JSON.parse(dataStr);
                                 if (data.error) {
+                                    // Rethrow so the outer catch block shows the error to the user
                                     throw new Error(data.error.message);
                                 }
                                 if (data.candidates && data.candidates.length > 0) {
@@ -235,7 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                     }
                                 }
                             } catch (e) {
-                                console.error("Error parsing SSE JSON:", e, dataStr);
+                                if (e.message && !e.message.startsWith('API Error') && !(e instanceof SyntaxError)) {
+                                    throw e; // Rethrow API errors to outer catch
+                                }
+                                // Silently skip malformed SSE chunks (keep-alive lines, etc.)
+                                if (!(e instanceof SyntaxError)) throw e;
                             }
                         }
                     }

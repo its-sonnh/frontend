@@ -29,7 +29,7 @@ async def convert_docx(
     file_bytes = await file.read()
     base64_pdf = base64.b64encode(file_bytes).decode('utf-8')
     
-    model = 'gemini-3.1-pro-preview'
+    model = 'gemini-2.5-pro-preview-05-06'
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:streamGenerateContent?alt=sse&key={geminiApiKey}"
     
     payload = {
@@ -64,7 +64,10 @@ async def convert_docx(
             async with client.stream('POST', url, json=payload, timeout=httpx.Timeout(300.0)) as response:
                 if response.status_code != 200:
                     error_data = await response.aread()
-                    error_msg = f"API Error {response.status_code}: {error_data.decode('utf-8')}"
+                    error_text = error_data.decode('utf-8', errors='replace')
+                    # Strip control characters that break JSON
+                    error_text = error_text.replace('\n', ' ').replace('\r', ' ')
+                    error_msg = f"API Error {response.status_code}: {error_text}"
                     error_json = json.dumps({"error": {"message": error_msg}})
                     yield f"data: {error_json}\n\n"
                     return
