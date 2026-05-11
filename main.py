@@ -72,5 +72,6 @@ async def convert_docx(
     return StreamingResponse(stream_generator(), media_type="text/event-stream")
 
 # Mount frontend directory for static files
-frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
+# Lấy thư mục hiện tại chứa file main.py
+current_dir = os.path.dirname(os.path.abspath(__file__))
+app.mount("/", StaticFiles(directory=current_dir, html=True), name="frontend")
