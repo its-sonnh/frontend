@@ -5,6 +5,7 @@ from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
+import json
 
 app = FastAPI()
 
@@ -63,7 +64,9 @@ async def convert_docx(
             async with client.stream('POST', url, json=payload, timeout=httpx.Timeout(300.0)) as response:
                 if response.status_code != 200:
                     error_data = await response.aread()
-                    yield f"data: {{\"error\": {{\"message\": \"API Error {response.status_code}: {error_data.decode('utf-8')}\"}}}}\n\n"
+                    error_msg = f"API Error {response.status_code}: {error_data.decode('utf-8')}"
+                    error_json = json.dumps({"error": {"message": error_msg}})
+                    yield f"data: {error_json}\n\n"
                     return
                 
                 async for chunk in response.aiter_bytes():
