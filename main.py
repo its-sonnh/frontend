@@ -29,7 +29,7 @@ async def convert_docx(
     file_bytes = await file.read()
     base64_pdf = base64.b64encode(file_bytes).decode('utf-8')
     
-    model = 'gemini-2.5-pro-preview-05-06'
+    model = 'gemini-3.1-pro-preview'
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:streamGenerateContent?alt=sse&key={geminiApiKey}"
     
     payload = {
