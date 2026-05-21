@@ -47,11 +47,7 @@
                     <label for="qa-gemini-api-key">Gemini API Key</label>
                     <input type="password" id="qa-gemini-api-key" placeholder="Nhập API Key của bạn (Key chỉ lưu trên trình duyệt)...">
                 </div>
-                <div class="input-group">
-                    <label for="qa-system-prompt">System Prompt</label>
-                    <textarea id="qa-system-prompt" rows="3" placeholder="Nhập prompt kiểm tra của bạn...">Bạn là một chuyên gia kiểm tra đề thi. Nhiệm vụ của bạn là kiểm tra, đối chiếu sự khác biệt giữa 2 file PDF được cung cấp (File UI hệ thống và File đề gốc) và báo cáo lỗi chi tiết.
-Hãy so sánh từng câu hỏi, đáp án và định dạng, chỉ ra chính xác điểm nào sai lệch.</textarea>
-                </div>
+
             </div>
 
             <div class="upload-container">
@@ -92,7 +88,7 @@ Hãy so sánh từng câu hỏi, đáp án và định dạng, chỉ ra chính x
                 <div class="col-header" style="margin-bottom: 12px;">
                     <h3>Kết quả AI</h3>
                 </div>
-                <div id="qa-response-box" class="chatbox-output" style="min-height: 150px; padding: 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; white-space: pre-wrap; font-family: inherit; line-height: 1.5;">
+                <div id="qa-response-box" class="chatbox-output" style="min-height: 150px; padding: 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; white-space: normal; font-family: inherit; line-height: 1.5;">
                 </div>
             </div>
         </section>
@@ -122,10 +118,7 @@ Hãy so sánh từng câu hỏi, đáp án và định dạng, chỉ ra chính x
                     <label for="gemini-api-key">Gemini API Key</label>
                     <input type="password" id="gemini-api-key" placeholder="Nhập API Key của bạn...">
                 </div>
-                <div class="input-group">
-                    <label for="system-prompt">System Prompt</label>
-                    <textarea id="system-prompt" rows="3" placeholder="Ví dụ: Hãy convert đề thi sau sang định dạng chuẩn..."></textarea>
-                </div>
+
             </div>
 
             <div class="docx-workspace">
@@ -165,6 +158,19 @@ Hãy so sánh từng câu hỏi, đáp án và định dạng, chỉ ra chính x
     <footer class="footer">
         © 2026 ONLUYEN.VN EXAM MANAGEMENT SYSTEM
     </footer>
+
+    <!-- Markdown & LaTeX renderer -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <script src="script.js"></script>
 </body>
